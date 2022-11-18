@@ -1,5 +1,8 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'distribution'
+    id 'checkstyle'
 }
 
 group 'hexlet.code'
@@ -16,4 +19,16 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+application {
+    mainClass = 'hexlet.code.App'
+}
+
+compileJava {
+    options.release = 17
+}
+
+run {
+    standardInput = System.in
 }
