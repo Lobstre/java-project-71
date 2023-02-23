@@ -3,6 +3,8 @@ plugins {
     id 'application'
     id 'distribution'
     id 'checkstyle'
+    id 'com.adarshr.test-logger' version '3.1.0'
+    id 'jacoco'
 }
 
 group 'hexlet.code'
@@ -38,4 +40,25 @@ compileJava {
 
 run {
     standardInput = System.in
+}
+
+testlogger {
+    showStandardStreams true
+}
+
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        csv.required = true
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
+}
+
+checkstyle {
+    toolVersion '9.2.1'
 }

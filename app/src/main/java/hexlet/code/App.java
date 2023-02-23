@@ -26,7 +26,7 @@ public class App implements Callable<Integer> {
         var text1 = Parse.parse(filePath1);
         var text2 = Parse.parse(filePath2);
 
-        var diff = Differ.differ(text1, text2);
+        var diff = Differ.generate(text1, text2, format);
 
         System.out.println(diff);
 
