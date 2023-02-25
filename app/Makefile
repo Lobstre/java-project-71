@@ -1,22 +1,22 @@
-install: # install
-	./gradlew clean install
-
-run-dist: # run
-	./build/install/app/bin/app
-
-check-updates: #check updates
-	./gradlew dependencyUpdates
-
+run-dist:
+		build/install/app/bin/app
+ 
+install:
+		./gradlew clean install
+ 
+run:
+		./gradlew run
+ 
 report:
-	./gradlew jacocoTestReport
-
-lint: # checkstyle
-	./gradlew checkstyleMain checkstyleTest
-
+		./gradlew jacocoTestReport
+ 
+lint:
+		./gradlew checkstyleMain checkstyleTest
+ 
 test:
-	./gradlew test
-
+		./gradlew test
+ 
 .PHONY: build
-
-build: # build
-	./gradlew clean build
+ 
+build:
+		./gradlew build
