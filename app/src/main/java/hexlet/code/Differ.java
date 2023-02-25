@@ -1,86 +1,42 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.io.File;
+import java.nio.file.Files;
+import java.util.Map;
 
 public class Differ {
 
-    public static String generate(String text1, String text2, String formatName) throws Exception {
-
-        if (text1.isEmpty() && text2.isEmpty()) {
+    private static String getFileFormat(File file) {
+        var filePath = file.getPath();
+        if (!filePath.contains(".")) {
             return "";
         }
+        var lastIndexOfDot = filePath.lastIndexOf(".") + 1;
+        var format = filePath.substring(lastIndexOfDot);
 
-        var diff = differ(text1, text2);
-        return Formatter.formatter(diff, formatName);
+        return format.toLowerCase();
     }
 
-    private static TreeMap<String, HashMap<String, String>> differ(String text1, String text2)
-            throws JsonProcessingException {
+    private static Map getData(String filePath) throws Exception {
 
-        ObjectMapper objectMapper = getMapper(text1);
+        var file = new File(filePath);
+        var data = Files.readString(file.toPath());
 
-        TreeSet<String> fields = new TreeSet<>();
-
-        JsonNode node1 = objectMapper.readTree(text1);
-        JsonNode node2 = objectMapper.readTree(text2);
-
-        Iterator<String> it1 = node1.fieldNames();
-        while (it1.hasNext()) {
-            fields.add(it1.next());
-        }
-        Iterator<String> it2 = node2.fieldNames();
-        while (it2.hasNext()) {
-            fields.add(it2.next());
-        }
-
-        TreeMap<String, HashMap<String, String>> result = new TreeMap<>();
-        for (var field : fields) {
-
-            HashMap<String, String> changes = new HashMap<>();
-            result.put(field, changes);
-
-            if (!node1.has(field)) {
-                result.get(field).put("+", node2.get(field).toString());
-            } else if (!node2.has(field)) {
-                result.get(field).put("-", node1.get(field).toString());
-            } else {
-                var value1 = node1.get(field).toString();
-                var value2 = node2.get(field).toString();
-                if (value1.equals(value2)) {
-                    result.get(field).put("=", value2);
-                } else {
-                    result.get(field).put("-", value1);
-                    result.get(field).put("+", value2);
-                }
-            }
-        }
-
-        return result;
+        var format = getFileFormat(file);
+        return Parser.parse(data, format);
     }
 
-    private static ObjectMapper getMapper(String text) {
-        ObjectMapper objectMapper;
+    public static String generate(String filePath1, String filePath2) throws Exception {
+        return generate(filePath1, filePath2, "stylish");
+    }
 
-        try {
-            objectMapper = new ObjectMapper();
-            objectMapper.readTree(text);
-        } catch (Exception e1) {
-            objectMapper = new YAMLMapper();
-            try {
-                objectMapper.readTree(text);
-            } catch (Exception e2) {
-                objectMapper = null;
-            }
-        }
+    public static String generate(String filePath1, String filePath2, String formatName) throws Exception {
 
-        return objectMapper;
+        var map1 = getData(filePath1);
+        var map2 = getData(filePath2);
+
+        var diff = Tree.build(map1, map2);
+
+        return Formatter.render(diff, formatName);
     }
 }

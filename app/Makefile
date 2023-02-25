@@ -7,9 +7,6 @@ run-dist: # run
 check-updates: #check updates
 	./gradlew dependencyUpdates
 
-run:
-	./gradlew run
-
 report:
 	./gradlew jacocoTestReport
 
