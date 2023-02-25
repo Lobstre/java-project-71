@@ -1,9 +1,8 @@
 plugins {
     id 'java'
     id 'application'
-    id 'distribution'
     id 'checkstyle'
-    id 'com.adarshr.test-logger' version '3.1.0'
+    id 'com.adarshr.test-logger' version '3.2.0'
     id 'jacoco'
 }
 
@@ -15,15 +14,13 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-    implementation 'info.picocli:picocli:4.7.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-params:5.9.2'
+    implementation 'info.picocli:picocli:4.7.1'
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.1'
-    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.14.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml
-    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.12.4'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.2'
 }
 
 test {
@@ -48,7 +45,7 @@ testlogger {
 }
 
 jacoco {
-    toolVersion = "0.8.7"
+    toolVersion = "0.8.8"
 }
 
 jacocoTestReport {

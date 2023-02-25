@@ -1,5 +1,6 @@
 package hexlet.code;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
@@ -10,7 +11,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DifferTest {
     private static String resourcesPath;
@@ -42,7 +42,7 @@ public class DifferTest {
         var expected = Files.readString(path);
         var actual = Differ.generate(filePath1, filePath2, "stylish");
 
-        assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual);
     }
 
     private void testPlainAbstract(String filePath1, String filePath2) throws Exception {
@@ -50,7 +50,7 @@ public class DifferTest {
         var expected = Files.readString(path);
         var actual = Differ.generate(filePath1, filePath2, "plain");
 
-        assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual);
     }
 
     private void testJsonAbstract(String filePath1, String filePath2) throws Exception {
@@ -58,7 +58,7 @@ public class DifferTest {
         var expected = Files.readString(expectedPath);
         var actual = Differ.generate(filePath1, filePath2, "json");
 
-        assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test

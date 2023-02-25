@@ -19,7 +19,6 @@ jobs:
           build-root-directory: app
       - run: make build
       - name: Publish code coverage
-#        uses: paambaati/codeclimate-action@v2.7.1
         uses: paambaati/codeclimate-action@v3.2.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.TEST_REPORTER_ID }}
@@ -27,8 +26,3 @@ jobs:
         with:
           coverageCommand: make report
           coverageLocations: ${{ github.workspace }}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
-#      - name: Run Snyk to check for vulnerabilities
-#        uses: snyk/actions/node@master
-#        continue-on-error: true
-#        env:
-#          SNYK_TOKEN: ${{ secrets.SNYK.TOKEN }}
