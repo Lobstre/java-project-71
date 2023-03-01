@@ -17,7 +17,7 @@ jobs:
         with:
           arguments: build
           build-root-directory: app
-        run: make install
+        run: make build
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v3.2.0
         env:
