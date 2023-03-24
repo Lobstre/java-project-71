@@ -6,6 +6,20 @@ import java.util.Map;
 
 public class Differ {
 
+    public static String generate(String filePath1, String filePath2) throws Exception {
+        return generate(filePath1, filePath2, "stylish");
+    }
+
+    public static String generate(String filePath1, String filePath2, String formatName) throws Exception {
+
+        var map1 = getData(filePath1);
+        var map2 = getData(filePath2);
+
+        var diff = Tree.build(map1, map2);
+
+        return Formatter.render(diff, formatName);
+    }
+
     private static String getFileFormat(File file) {
         var filePath = file.getPath();
         if (!filePath.contains(".")) {
@@ -24,19 +38,5 @@ public class Differ {
 
         var format = getFileFormat(file);
         return Parser.parse(data, format);
-    }
-
-    public static String generate(String filePath1, String filePath2) throws Exception {
-        return generate(filePath1, filePath2, "stylish");
-    }
-
-    public static String generate(String filePath1, String filePath2, String formatName) throws Exception {
-
-        var map1 = getData(filePath1);
-        var map2 = getData(filePath2);
-
-        var diff = Tree.build(map1, map2);
-
-        return Formatter.render(diff, formatName);
     }
 }

@@ -5,12 +5,13 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
 import java.util.HashMap;
 import java.util.Map;
+import static hexlet.code.ParseCase.ParseCase;
 
 public class Parser {
     public static Map parse(String data, String format) throws Exception {
-        var result = switch (format) {
-            case "json" -> Parser.parseJson(data);
-            case "yml", "yaml" -> Parser.parseYaml(data);
+        var result = switch (ParseCase) {
+            case json -> Parser.parseJson(data);
+            case yml, yaml -> Parser.parseYaml(data);
             default -> throw new Exception("Unsupported format");
         };
 
